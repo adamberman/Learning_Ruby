@@ -39,4 +39,8 @@ class Piece
 
 	def maybe_promote
 	end
+
+	def inspect
+		print color == :b ? "B" : "W"
+	end
 end

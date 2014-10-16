@@ -40,7 +40,5 @@ class Board
 	end
 end
 
-board = Board.new(false)
-piece = Piece.new(:b, board, [2,0])
-board[[2,0]] = piece
-p piece.perform_slide([3,-1])
+board = Board.new
+p board[[0,0]]

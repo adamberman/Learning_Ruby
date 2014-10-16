@@ -40,5 +40,9 @@ class Board
 	end
 end
 
-board = Board.new
-p board[[0,0]]
+board = Board.new(false)
+piece1 = Piece.new(:b, board, [2,4])
+piece2 = Piece.new(:w, board, [3,3])
+board[[2,4]] = piece1
+board[[3,3]] = piece2
+p piece1.perform_jump([4,2])

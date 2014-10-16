@@ -15,20 +15,38 @@ class Piece
 		board.class.in_bounds?(end_pos) && slideable?(end_pos)
 	end
 
-	def slideable?(end_pos)
-		board[end_pos].nil? && in_sliding_direction?(end_pos)
+	def perform_jump(end_pos)
+		board.class.in_bounds?(end_pos) && jumpable?(end_pos)
 	end
 
-	def in_sliding_direction?(end_pos)
+	
+
+	def slideable?(end_pos)
+		board[end_pos].nil? && in_valid_direction?(end_pos, 1)
+	end
+
+	def in_valid_direction?(end_pos, spaces)
 		move_directions.each do |direction|
-			possible_pos = [pos[0] + direction[0], pos[1] + direction[1]]
-			return true if possible_pos == end_pos
+			x = pos[0] + (spaces * direction[0])
+			y = pos[1] + (spaces * direction[1])
+			return true if [x, y] == end_pos
 		end
 
 		false
 	end
 
-	def perform_jump
+	def jumpable?(end_pos)
+		jumping_space?(end_pos) && in_valid_direction?(end_pos, 2)
+	end
+
+	def jumping_space?(end_pos)
+		board[end_pos].nil? && something_to_jump?(end_pos)
+	end
+
+	def something_to_jump?(end_pos)
+		x = pos[0] + ((end_pos[0] - pos[0]) / 2)
+		y = pos[1] + ((end_pos[1] - pos[1]) / 2)
+		!board[[x, y]].nil? && board[[x, y]].color != color
 	end
 
 	def move_directions

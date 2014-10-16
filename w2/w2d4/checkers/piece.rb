@@ -12,14 +12,24 @@ class Piece
 	end
 
 	def perform_slide(end_pos)
-		board.class.in_bounds?(end_pos) && slideable?(end_pos)
+		if board.class.in_bounds?(end_pos) && slideable?(end_pos)
+      move(end_pos)
+      return true
+    end
+
+    false
 	end
 
 	def perform_jump(end_pos)
-		board.class.in_bounds?(end_pos) && jumpable?(end_pos)
+		if board.class.in_bounds?(end_pos) && jumpable?(end_pos)
+      jump(end_pos)
+      return true
+    end
+
+    false
 	end
 
-	
+	private
 
 	def slideable?(end_pos)
 		board[end_pos].nil? && in_valid_direction?(end_pos, 1)
@@ -35,6 +45,17 @@ class Piece
 		false
 	end
 
+  def move(end_pos)
+    board[pos] = nil
+    self.pos = end_pos
+    board[pos] = self
+  end
+
+  def jump(end_pos)
+    board[jumped_space_coords(end_pos)] = nil
+    move(end_pos)
+  end
+
 	def jumpable?(end_pos)
 		jumping_space?(end_pos) && in_valid_direction?(end_pos, 2)
 	end
@@ -43,10 +64,15 @@ class Piece
 		board[end_pos].nil? && something_to_jump?(end_pos)
 	end
 
+  def jumped_space_coords(end_pos)
+    x = pos[0] + ((end_pos[0] - pos[0]) / 2)
+    y = pos[1] + ((end_pos[1] - pos[1]) / 2)
+    [x, y]
+  end
+
 	def something_to_jump?(end_pos)
-		x = pos[0] + ((end_pos[0] - pos[0]) / 2)
-		y = pos[1] + ((end_pos[1] - pos[1]) / 2)
-		!board[[x, y]].nil? && board[[x, y]].color != color
+    jumped_coords = jumped_space_coords(end_pos)
+		!board[jumped_coords].nil? && board[jumped_coords].color != color
 	end
 
 	def move_directions
@@ -55,7 +81,11 @@ class Piece
 		DIRECTIONS[2..3]
 	end
 
-	def maybe_promote
+	def maybe_promote?
+    reached_last_row = color == :b ? pos[1] == 0 : pos[1] == 7
+		if reached_last_row
+      self.king = true
+    end
 	end
 
 	def inspect

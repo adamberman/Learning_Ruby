@@ -34,6 +34,6 @@ class Board
 
 	def []=(pos, piece)
 		x, y = pos
-		@rows[y][x] = piece
+		@grid[y][x] = piece
 	end
 end

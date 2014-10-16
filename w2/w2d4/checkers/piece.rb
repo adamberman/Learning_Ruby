@@ -15,11 +15,14 @@ class Piece
 	def perform_jump
 	end
 
-	def possible_moves
+	def move_directions
+		directions = [[1, 1], [-1, 1]]
+		directions + [[1, -1], [-1, -1]] if king
 	end
 
 	def maybe_promote
 	end
 
-
+	def check_for_piece
+	end
 end

@@ -14,6 +14,11 @@ class Piece
 		@king = king
 	end
 
+  def perform_moves(move_sequence)
+    raise InvalidMoveError unless valid_move_seq?(move_sequence)
+    perform_moves!(move_sequence) 
+  end
+
   def perform_moves!(move_sequence)
     #errors: more than 2 slides, slide to invalid place, jump to invalid place
     move_sequence.each do |move|
@@ -26,8 +31,6 @@ class Piece
       end
     end
   end
-
-	private
 
   def valid_move_seq?(move_sequence)
     piece_dup = dup

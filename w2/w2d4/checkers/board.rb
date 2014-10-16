@@ -43,10 +43,15 @@ end
 board = Board.new(false)
 piece1 = Piece.new(:b, board, [2,4])
 piece2 = Piece.new(:w, board, [3,3])
+piece3 = Piece.new(:w, board, [5,1])
 board[[2,4]] = piece1
 board[[3,3]] = piece2
-piece1.perform_jump([4,2])
+board[[5,1]] = piece3
+piece1.perform_moves!([[4,2], [6,0]])
 p board[[2,4]]
+p board[[1,3]]
 p board[[3,3]]
 p board[[4,2]]
+p board[[5,1]]
+p board[[6,0]]
 

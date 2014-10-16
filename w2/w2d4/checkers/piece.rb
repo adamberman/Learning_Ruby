@@ -1,3 +1,6 @@
+class InvalidMoveError < ArgumentError
+end
+
 class Piece
 
 	DIRECTIONS = [[1, 1], [-1, 1], [1, -1], [-1, -1]]
@@ -11,25 +14,43 @@ class Piece
 		@king = false
 	end
 
-	def perform_slide(end_pos)
-		if board.class.in_bounds?(end_pos) && slideable?(end_pos)
+  def perform_moves!(move_sequence)
+    #errors: more than 2 slides, slide to invalid place, jump to invalid place
+    move_sequence.each do |move|
+      if is_a_slide?(move) && move_sequence.count == 1
+        raise InvalidMoveError unless perform_slide(move)
+      elsif is_a_slide?(move)
+        raise InvalidMoveError
+      else
+        raise InvalidMoveError unless perform_jump(move)
+      end
+    end
+  end
+
+	private
+
+  def is_a_slide?(end_pos)
+    return true if (end_pos[0] - pos[0]).abs == 1
+    false
+  end
+
+  def perform_slide(end_pos)
+    if board.class.in_bounds?(end_pos) && slideable?(end_pos)
       move(end_pos)
       return true
     end
 
     false
-	end
+  end
 
-	def perform_jump(end_pos)
-		if board.class.in_bounds?(end_pos) && jumpable?(end_pos)
+  def perform_jump(end_pos)
+    if board.class.in_bounds?(end_pos) && jumpable?(end_pos)
       jump(end_pos)
       return true
     end
 
     false
-	end
-
-	private
+  end
 
 	def slideable?(end_pos)
 		board[end_pos].nil? && in_valid_direction?(end_pos, 1)

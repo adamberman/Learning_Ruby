@@ -33,4 +33,12 @@ class Game
 	def switch_players
 		self.current_player = current_player == player1 ? player2 : player1
 	end
+
+	def end_game_message
+		puts "Congratulations, #{winner} won the game!"
+	end
+
+	def winner
+		board.won?(:w) ? "White" : "Black"
+	end
 end

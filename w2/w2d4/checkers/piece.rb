@@ -126,8 +126,4 @@ class Piece
       self.king = true
     end
 	end
-
-	def inspect
-		print color == :b ? "B" : "W"
-	end
 end

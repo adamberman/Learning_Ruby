@@ -1,7 +1,9 @@
 class Board
 
+	attr_accessor :rows
+
 	def initialize(populate = true)
-		@rows = Array.new(8) { Array.new(8) }
+		@grid = Array.new(8) { Array.new(8) }
 		populate_board if populate
 	end
 
@@ -23,5 +25,15 @@ class Board
 		color = j >= 5 ? :b : :w
 		pos = [(i * 2) + offset, j]
 		self[pos] = Piece.new(color, self, pos)
+	end
+
+	def [](pos)
+		x, y = pos
+		@grid[y][x]
+	end
+
+	def []=(pos, piece)
+		x, y = pos
+		@rows[y][x] = piece
 	end
 end

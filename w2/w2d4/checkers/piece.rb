@@ -15,7 +15,18 @@ class Piece
 		board.in_bounds?(end_pos) && slideable?(end_pos)
 	end
 
-	def legal_spot
+	def slideable?(end_pos)
+		board[end_pos].nil? && in_sliding_direction?(end_pos)
+	end
+
+	def in_sliding_direction?(end_pos)
+		move_directions.each do |direction|
+			possible_pos = [end_pos[0] + direction[0], end_pos[1] + direction[1]]
+			return true if possible_pos == end_pos
+		end
+		
+		false
+	end
 
 	def perform_jump
 	end
@@ -27,8 +38,5 @@ class Piece
 	end
 
 	def maybe_promote
-	end
-
-	def check_for_piece
 	end
 end

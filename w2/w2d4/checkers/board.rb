@@ -50,6 +50,22 @@ class Board
 
 		board_dup
 	end
+
+	def won?(color)
+		grid.flatten.none? { |piece| piece.color == color }
+	end
+
+	def draw?
+		one_white? && one_black?
+	end
+
+	def one_white?
+		grid.flatten.one? { |piece| piece.color == :w }
+	end
+
+	def one_black?
+		grid.flatten.one? { |piece| piece.color == :b }
+	end
 end
 
 board = Board.new(false)

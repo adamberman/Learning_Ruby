@@ -9,9 +9,9 @@ class Piece
 
 	attr_reader :color, :board
 
-	def initialize(color, board, pos)
+	def initialize(color, board, pos, king = false)
 		@color, @board, @pos = color, board, pos
-		@king = false
+		@king = king
 	end
 
   def perform_moves!(move_sequence)
@@ -28,6 +28,21 @@ class Piece
   end
 
 	private
+
+  def valid_move_seq?(move_sequence)
+    piece_dup = dup
+    begin
+      piece_dup.perform_moves!(move_sequence)
+    rescue
+      return false
+    else
+      true
+    end
+  end
+
+  def dup
+    Piece.new(color, board.dup, pos, king)
+  end
 
   def is_a_slide?(end_pos)
     return true if (end_pos[0] - pos[0]).abs == 1

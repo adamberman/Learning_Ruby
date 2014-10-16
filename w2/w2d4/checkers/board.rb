@@ -38,6 +38,18 @@ class Board
 		x, y = pos
 		@grid[y][x] = piece
 	end
+
+	def dup
+		board_dup = Board.new(false)
+		@grid.each do |row|
+			row.each do |col|
+				next if col.nil?
+				board_dup[col.pos] = Piece.new(col.color, board_dup, col.pos, col.king)
+			end
+		end
+
+		board_dup
+	end
 end
 
 board = Board.new(false)

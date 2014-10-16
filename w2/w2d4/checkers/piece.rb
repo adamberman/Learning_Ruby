@@ -12,7 +12,7 @@ class Piece
 	end
 
 	def perform_slide(end_pos)
-		board.on_board?(end_pos) && slideable?(end_pos)
+		board.in_bounds?(end_pos) && slideable?(end_pos)
 	end
 
 	def legal_spot

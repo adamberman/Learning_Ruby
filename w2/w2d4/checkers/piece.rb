@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class InvalidMoveError < ArgumentError
 end
 
@@ -16,7 +18,8 @@ class Piece
 
   def perform_moves(move_sequence)
     raise InvalidMoveError unless valid_move_seq?(move_sequence)
-    perform_moves!(move_sequence) 
+    perform_moves!(move_sequence)
+    maybe_promote?
   end
 
   def perform_moves!(move_sequence)
@@ -126,4 +129,12 @@ class Piece
       self.king = true
     end
 	end
+
+  def inspect
+    if king
+      color == :b ? ' ■ ' : ' □ '
+    else  
+      color == :b ? ' ● ' : ' ◯ '
+    end
+  end
 end

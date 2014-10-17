@@ -1,3 +1,6 @@
+class InvalidPieceError < ArgumentError
+end
+
 class Player
 
 	attr_reader :color, :board
@@ -6,19 +9,25 @@ class Player
 		@color, @board = color, board
 	end
 
-	def play_turn
+	def take_turn
 		begin
 			input = pick_piece
-			piece = parse(input)
+			piece = board[parse(input)[0]]
 			check_piece(piece)
-		rescue InvalidPieceError
-			"Make sure you only select your own piece"
+		rescue InvalidPieceError => e
+			puts "#{e}"
+			retry
+		rescue ArgumentError
+			puts "Make sure to use the valid format"
 			retry
 		end
 		move_sequence = pick_moves
 		piece.perform_moves(parse(move_sequence))
 	rescue InvalidMoveError
-		"Make sure you're following the rules. Let's try again."
+		puts "Make sure you're following the rules. Let's try again."
+		retry
+	rescue ArgumentError
+		puts "Make sure to use the valid format"
 		retry
 	end
 
@@ -28,11 +37,12 @@ class Player
 	end
 
 	def parse(input)
-		input.split.map { |pos| [letter_hash[pos[0]], Integer(pos[1]) - 1 }
+		input.split.map { |pos| [letter_hash[pos[0]], Integer(pos[1]) - 1] }
 	end
 
 	def check_piece(piece)
-		raise InvalidPieceError unless piece.color == color
+		raise InvalidPieceError.new "You selected a nil piece" if piece.nil?
+		raise InvalidPieceError.new "Only pick your own pieces" unless piece.color == color
 	end
 
 	def pick_moves

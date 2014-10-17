@@ -1,4 +1,7 @@
+# encoding: UTF-8
+
 require './piece.rb'
+require 'colorize'
 
 class Board
 
@@ -52,7 +55,8 @@ class Board
 	end
 
 	def won?(color)
-		grid.flatten.none? { |piece| piece.color == color }
+		check_color = recolor[color]
+		squares.none? { |piece| piece.color == check_color }
 	end
 
 	def draw?
@@ -60,26 +64,71 @@ class Board
 	end
 
 	def one_white?
-		grid.flatten.one? { |piece| piece.color == :w }
+		squares.one? { |piece| piece.color == :w }
 	end
 
 	def one_black?
-		grid.flatten.one? { |piece| piece.color == :b }
+		squares.one? { |piece| piece.color == :b }
+	end
+
+	def squares
+		grid.flatten.compact
+	end
+
+	def display
+		display_letters
+		display_grid
+		display_letters
+	end
+
+	def display_letters
+		print "  "
+		('a'..'h').each { |letter| print " #{letter} " } 
+		puts "\n"
+	end
+
+	def display_grid
+		color = :light_white
+		grid.each do |row|
+			print "#{grid.index(row) + 1} "
+			color = recolor[color]
+			row.each do |square|
+				color = recolor[color]
+				display_square(row, square, color)
+			end
+			puts " #{grid.index(row) + 1} "
+		end
+	end
+
+	def display_square(row, square, color)
+		if square.nil?
+			print "   ".colorize(:background => color) 
+		else
+			print square.inspect.colorize(:background => color)
+		end
+	end
+
+	def recolor
+		{ :light_white => :light_black,
+			:light_black => :light_white,
+			:w => :b,
+			:b => :w
+		}
 	end
 end
 
-board = Board.new(false)
-piece1 = Piece.new(:b, board, [2,4])
-piece2 = Piece.new(:w, board, [3,3])
-piece3 = Piece.new(:w, board, [5,1])
-board[[2,4]] = piece1
-board[[3,3]] = piece2
-board[[5,1]] = piece3
-p piece1.perform_moves([[4,2], [6,0]])
-p board[[2,4]]
-p board[[1,3]]
-p board[[3,3]]
-p board[[4,2]]
-p board[[5,1]]
-p board[[6,0]]
+# board = Board.new(false)
+# piece1 = Piece.new(:b, board, [2,4])
+# piece2 = Piece.new(:w, board, [3,3])
+# piece3 = Piece.new(:w, board, [5,1])
+# board[[2,4]] = piece1
+# board[[3,3]] = piece2
+# board[[5,1]] = piece3
+# p piece1.perform_moves([[4,2], [6,0]])
+# p board[[2,4]]
+# p board[[1,3]]
+# p board[[3,3]]
+# p board[[4,2]]
+# p board[[5,1]]
+# p board[[6,0]]
 

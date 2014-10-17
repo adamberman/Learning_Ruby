@@ -1,9 +1,16 @@
 require_relative '../lib/array_exercises'
 
-describe my_unique do
+describe Array do
   subject(:arr) { Array.new }
-  
-  it "should create an array"
-  it "should have no duplicate elements"
+    
+  describe "#my_unique" do
+  let(:arr1) { Array.new { [1,2,2,3,1]} }
+    it "should create an array" do
+      arr2 = arr1.my_unique
+      expect(arr1).not_to equal(arr2)
+    end
+    
+    it "should have no duplicate elements"
+  end
 end
 

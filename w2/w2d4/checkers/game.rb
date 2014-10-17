@@ -1,5 +1,6 @@
 require './board.rb'
-require './player.rb'
+require './HumanPlayer.rb'
+require './ComputerPlayer.rb'
 
 require 'byebug'
 
@@ -49,5 +50,5 @@ class Game
 end
 
 board = Board.new
-game = Game.new(Player.new(:w, board), Player.new(:b, board), board)
+game = Game.new(HumanPlayer.new(:w, board), ComputerPlayer.new(:b, board), board)
 game.play

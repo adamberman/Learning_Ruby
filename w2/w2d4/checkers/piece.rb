@@ -22,6 +22,18 @@ class Piece
     maybe_promote?
   end
 
+  def inspect
+    if king
+      color == :b ? ' ■ ' : ' □ '
+    else  
+      color == :b ? ' ● ' : ' ◯ '
+    end
+  end
+
+  def can_move?
+  end
+
+protected 
   def perform_moves!(move_sequence)
     #errors: more than 2 slides, slide to invalid place, jump to invalid place
     move_sequence.each do |move|
@@ -39,7 +51,7 @@ class Piece
     piece_dup = dup
     begin
       piece_dup.perform_moves!(move_sequence)
-    rescue
+    rescue InvalidMoveError
       return false
     else
       true
@@ -129,12 +141,4 @@ class Piece
       self.king = true
     end
 	end
-
-  def inspect
-    if king
-      color == :b ? ' ■ ' : ' □ '
-    else  
-      color == :b ? ' ● ' : ' ◯ '
-    end
-  end
 end

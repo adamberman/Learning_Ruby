@@ -2,6 +2,7 @@
 
 require './piece.rb'
 require 'colorize'
+require 'byebug'
 
 class Board
 
@@ -18,8 +19,8 @@ class Board
 
 	def populate_board
 		(0..7).each do |j|
-			next if j == 3 || j == 4
 			(0..3).each do |i|
+				next if j == 3 || j == 4
 				set_piece(i, j)
 			end
 		end
@@ -75,6 +76,10 @@ class Board
 		grid.flatten.compact
 	end
 
+	def colored_pieces(color)
+		squares.select { |piece| piece.color == color}
+	end
+
 	def display
 		display_letters
 		display_grid
@@ -89,14 +94,14 @@ class Board
 
 	def display_grid
 		color = :light_white
-		grid.each do |row|
-			print "#{grid.index(row) + 1} "
+		grid.each_with_index do |row, i|
+			print "#{i + 1} "
 			color = recolor[color]
 			row.each do |square|
 				color = recolor[color]
 				display_square(row, square, color)
 			end
-			puts " #{grid.index(row) + 1} "
+			puts " #{i + 1} "
 		end
 	end
 

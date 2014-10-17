@@ -89,6 +89,7 @@ describe "stock picker" do
     expect(output[0]).to be < output[1]
   end
   
-  it "should choose the most profitable buy and sell date"
-  
+  it "should choose the most profitable buy and sell date" do
+    expect(output).to eq([5,6])
+  end
 end

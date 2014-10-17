@@ -68,13 +68,13 @@ def stock_picker(prices)
   answer = []
   greatest_profit = 0
   prices.each_with_index do |price, idx|
-    prices[(idx + 1)..-1].each_with_index do |price2, idx2|
+    prices.each_with_index do |price2, idx2|
+      next if idx2 <= idx
       if price2 - price > greatest_profit
-        answer = [idx, idx + idx2]
+        answer = [idx, idx2]
         greatest_profit = price2 - price
       end
     end
   end
-  p answer
   answer
 end

@@ -28,4 +28,8 @@ class Deck
   def accept_cards(card_arr)
     card_arr.each { |card| cards << card }
   end
+  
+  def shuffle
+    cards.shuffle
+  end
 end

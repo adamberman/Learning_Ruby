@@ -28,5 +28,7 @@ describe Deck do
     end
   end
   
-  it "should be able to shuffle"
+  it "should be able to shuffle" do
+    expect(deck.shuffle).not_to eq(deck)
+  end
 end

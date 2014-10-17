@@ -21,6 +21,17 @@ class Hand
   def get_cards(num)
     self.cards += deck.give_cards(num)
   end
+  
+  def sort_hand(&blk)
+    cards.sort { blk.call }
+  end
+  
+  def calculate_value
+    # case
+#     when
+#     when
+#     end
+  end
 end
 
 #enforce limit, no more than 5 cards

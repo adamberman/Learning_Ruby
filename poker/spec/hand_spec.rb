@@ -33,13 +33,26 @@ describe Hand do
   
   describe "#calculate value" do
     it "calculates the comparitor value of the hand" do
-      let(:card1) { Card.new(:ace, :spades) }
-      let(:card2) { Card.new(:king, :spades) }
-      let(:card3) { Card.new(:queen, :spades) }
-      let(:card4) { Card.new(:jack, :spades) }
-      let(:card5) { Card.new(10, :spades) }
-      let(:hand1) { Hand.new(deck, [card1, card2, card3, card4, card5]) }
+      card1 = Card.new(:ace, :spades)
+      card2 = Card.new(:king, :spades)
+      card3 = Card.new(:queen, :spades)
+      card4 = Card.new(:jack, :spades)
+      card5 = Card.new(10, :spades)
+      hand1 = Hand.new(deck, [card1, card2, card3, card4, card5])
       expect(hand1.calculate_value).to eq(8)
+    end
+  end
+  
+  describe "#sort hand" do
+    it "sorts hands" do
+      card2 = Card.new(:ace, :spades)
+      card3 = Card.new(:king, :spades)
+      card5 = Card.new(:queen, :spades)
+      card1 = Card.new(:jack, :spades)
+      card4 = Card.new(10, :spades)
+      hand1 = Hand.new(deck, [card1, card2, card3, card4, card5])
+      hand1 = Hand.new(deck, [card2, card3, card5, card1, card4])
+      expect(hand1.sort_hand).to eq(hand2)
     end
   end
   

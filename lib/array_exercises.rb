@@ -23,4 +23,9 @@ end
 
 class Towers
   
+  attr_accessor :towers
+  
+  def initialize
+    @towers = [[3, 2, 1], [], []]
+  end
 end

@@ -31,11 +31,17 @@ describe Array do
 end
 
 describe Towers do
+  subject(:game) { Towers.new }
+  
   describe "towers of hanoi" do
     it "should init with 3 towers" do
-      towers
+      expect(game.towers.count).to eq(3)
     end
-    it "tower 1 should init with 3 disks"
+    
+    it "tower 1 should init with 3 disks" do
+      expect(game.towers[0].count).to eq(3)
+    end
+    
     it "should ask for user input"
     it "should win if 3 disks are at a different tower"
     it "should check to see if game is over"

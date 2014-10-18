@@ -51,7 +51,7 @@ describe Hand do
       card1 = Card.new(:jack, :spades)
       card4 = Card.new(10, :spades)
       hand1 = Hand.new(deck, [card1, card2, card3, card4, card5])
-      hand1 = Hand.new(deck, [card2, card3, card5, card1, card4])
+      hand2 = [10, 11, 12, 13, 14]
       expect(hand1.sort_hand).to eq(hand2)
     end
   end

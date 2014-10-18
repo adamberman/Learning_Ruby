@@ -43,19 +43,47 @@ class Hand
   end
   
   def straight_flush?
-    
+    incremented? && flushed?
+  end
+  
+  def incremented?
+    cardz = sort_hand
+    i = cardz.first
+    4.times do |j|
+      i +=1
+      return false if cardz[j + 1] != i
+    end 
+    true
   end
   
   def four_of_a_kind?
-    
+    cardz = sort_hand
+    count_hash = Hash.new(0)
+    cardz.each do |card|
+      count_hash[card] += 1
+    end
+    return true if count_hash.values.any? { |j| j == 4 }
+    false
   end
   
   def full_house?
-    
+    cardz = sort_hand
+    count_hash = Hash.new(0)
+    cardz.each do |card|
+      count_hash[card] += 1
+    end
+    if count_hash.values.any? { |j| j == 3 } && count_hash.values.any? { |j| j == 2 }
+      return true
+    end
+    false
   end
   
   def flush?
-  
+    Deck::SUITS.each do |suit|
+      return true if cards.all? { |card| card.suit == suit }
+    end
+    
+    false
   end
   
   def straight?

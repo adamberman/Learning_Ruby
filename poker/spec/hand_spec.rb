@@ -56,6 +56,17 @@ describe Hand do
     end
   end
   
-  it "should determine if it has won"
-
+  describe "#won?" do
+    it "should determine if it has won" do
+      card2 = Card.new(:ace, :spades)
+      card3 = Card.new(:king, :spades)
+      card5 = Card.new(:queen, :spades)
+      card1 = Card.new(:jack, :spades)
+      card4 = Card.new(10, :spades)
+      card6 = Card.new(2, :hearts)
+      hand1 = Hand.new(deck, [card1, card2, card3, card4, card5])
+      hand2 = Hand.new(deck, [card6])
+      expect(hand1.won?(hand2)).to be_true
+    end
+  end
 end

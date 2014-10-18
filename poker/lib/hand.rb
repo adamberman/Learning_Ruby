@@ -26,6 +26,51 @@ class Hand
     hand_values = cards.map { |card| Deck::VALUES[card.value] }
     hand_values.sort
   end
+
+  def won?(other_hand)
+    return true if calculate_value > other_hand.calculate_value
+    return false if calculate_value < other_hand.calculate_value
+    won_tie_hand?(other_hand)
+  end
+
+  def won_tie_hand?(other_hand)
+    if calculate_value == (8 || 5) || 4
+      sort_hand.reverse.each do |hcard|
+        other_hand.sort_hand.reverse.each do |ohcard|
+          return true if hcard > oh_card
+          return false if hcard < oh_card
+        end
+      end
+      false
+    elsif calculate_value == (7 || 6) || 3
+      sort_hand[2] > other_hand.sort_hand[2]
+    else
+      count_hash = Hash.new(0)
+      sort_hand.each do |card|
+        count_hash[card] += 1
+      end
+      oh_count_hash = Hash.new(0)
+      other_hand.sort_hand.each do |card|
+        oh_count_hash[card] += 1
+      end
+      pairs = count_hash.select { |key, value| value > 1 }.keys
+      oh_pairs = oh_count_hash.select { |key, value| value > 1 }.keys
+      pairs.sort.reverse.each do |pair|
+        oh_pairs.sort.reverse.each do |oh_pair|
+          return true if pair > oh_pair
+          return false if pair < oh_pair
+        end
+      end
+      other_cards = count_hash.reject { |key, value| value > 1 }.keys
+      oh_other_cards = oh_count_hash.select { |key, value| value > 1 }.keys
+      other_cards.sort.reverse.each do |card|
+        oh_other_cards.sort.reverse.each do |oh_card|
+          return true if card > oh_card
+          return false if card < oh_card
+        end
+      end
+    end  
+  end
   
   def calculate_value
     case 

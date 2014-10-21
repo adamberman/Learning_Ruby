@@ -71,6 +71,15 @@ class Hand
       end
     end  
   end
+
+  def count_cards
+    cardz = sort_hand
+    count_hash = Hash.new(0)
+    cardz.each do |card|
+      count_hash[card] += 1
+    end
+    count_hash
+  end
   
   def calculate_value
     case 
@@ -92,15 +101,11 @@ class Hand
   end
   
   def four_of_a_kind?
-    cardz = sort_hand
-    count_hash = Hash.new(0)
-    cardz.each do |card|
-      count_hash[card] += 1
-    end
+    count_hash = count_cards
     return true if count_hash.values.any? { |j| j == 4 }
     false
   end
-  
+    
   def full_house?
     cardz = sort_hand
     count_hash = Hash.new(0)

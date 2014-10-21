@@ -107,11 +107,7 @@ class Hand
   end
     
   def full_house?
-    cardz = sort_hand
-    count_hash = Hash.new(0)
-    cardz.each do |card|
-      count_hash[card] += 1
-    end
+    count_hash = count_cards
     if count_hash.values.any? { |j| j == 3 } && count_hash.values.any? { |j| j == 2 }
       return true
     end
@@ -137,21 +133,13 @@ class Hand
   end
   
   def three_of_a_kind?
-    cardz = sort_hand
-    count_hash = Hash.new(0)
-    cardz.each do |card|
-      count_hash[card] += 1
-    end
+    count_hash = count_cards
     return true if count_hash.values.any? { |j| j == 3 }
     false
   end
   
   def two_pair?
-    cardz = sort_hand
-    count_hash = Hash.new(0)
-    cardz.each do |card|
-      count_hash[card] += 1
-    end
+    count_hash = count_cards
     if count_hash.values.any? { |j| j == 2 }
       selected_hash = count_hash.select { |key, value| value > 1 }
       if selected_hash.keys.count > 1
@@ -162,11 +150,7 @@ class Hand
   end
   
   def pair?
-    cardz = sort_hand
-    count_hash = Hash.new(0)
-    cardz.each do |card|
-      count_hash[card] += 1
-    end
+    count_hash = count_cards
     return true if count_hash.values.any? { |j| j == 2 }
     false
   end

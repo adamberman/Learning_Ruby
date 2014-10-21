@@ -80,6 +80,11 @@ class Hand
     end
     count_hash
   end
+
+  def n_of_a_kind?(count_hash, n)
+    return true if count_hash.values.any? { |j| j == n }
+    false
+  end
   
   def calculate_value
     case 
@@ -101,9 +106,7 @@ class Hand
   end
   
   def four_of_a_kind?
-    count_hash = count_cards
-    return true if count_hash.values.any? { |j| j == 4 }
-    false
+    n_of_a_kind?(count_cards, 4)
   end
     
   def full_house?

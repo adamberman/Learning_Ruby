@@ -14,7 +14,7 @@ jobs:
     - uses: returntocorp/semgrep-action@v1
       with:
         auditOn: push
-        publishUrl: https://dev.semgrep.dev
+        publishUrl: http://localhost:3000
         publishToken: ${{ secrets.SEMGREP_APP_TOKEN }}
         publishDeployment: 35
       env:
